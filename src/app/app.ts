@@ -6,7 +6,7 @@ import {ProfileComponent} from './pages/profile/profile';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RegisterComponent, LoginComponent, ProfileComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

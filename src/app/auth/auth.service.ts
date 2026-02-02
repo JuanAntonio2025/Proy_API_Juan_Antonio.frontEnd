@@ -29,17 +29,24 @@ export class AuthService {
   */
 
   logout() {
-    return this.http.post(`${this.api}/auth/logout`, {}).pipe(
-    //finalize se ejecuta SIEMPRE: éxito o error
+    const token = this.getAccessToken();
+    return this.http.post(`${this.api}/logout`, {}, {
+      headers: { 'Authorization': `Bearer ${token}` } // <--- Forzamos el header aquí
+    }).pipe(
       finalize(() => this.clearTokens())
     );
-
   }
 
   getProfile() {
-    return this.http
-      .get<User>(`${this.api}/auth/userProfile`)
-      .pipe(tap(user => this.userSubject.next(user)));
+    const token = localStorage.getItem('access_token');
+    return this.http.get<User>(`${this.api}/userProfile`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    }).pipe(
+      tap(user => {
+        console.log('Datos recibidos del backend:', user); // Revisa la consola del navegador
+        this.userSubject.next(user); // <--- ESTO es lo que hace que se vea en el HTML
+      })
+    );
   }
 
   isAuthenticated(): boolean {

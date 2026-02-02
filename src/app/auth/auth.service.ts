@@ -5,7 +5,7 @@ import { LoginResponse, User } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private api = 'http://localhost:8000/api';
+  private api = 'http://127.0.0.1:8000/api';
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
@@ -29,7 +29,7 @@ export class AuthService {
   */
 
   logout() {
-    return this.http.post(`${this.api}/logout`, {}).pipe(
+    return this.http.post(`${this.api}/auth/logout`, {}).pipe(
     //finalize se ejecuta SIEMPRE: éxito o error
       finalize(() => this.clearTokens())
     );
@@ -38,7 +38,7 @@ export class AuthService {
 
   getProfile() {
     return this.http
-      .get<User>(`${this.api}/me`)
+      .get<User>(`${this.api}/auth/userProfile`)
       .pipe(tap(user => this.userSubject.next(user)));
   }
 

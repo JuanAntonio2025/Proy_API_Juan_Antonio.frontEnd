@@ -5,40 +5,40 @@ import {catchError, of, switchMap, throwError} from 'rxjs';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
-  const token = localStorage.getItem('access_token');
+  const token = auth.getAccessToken();
 
-  // 1. Clonamos añadiendo SIEMPRE el Accept y el Token si existe
-  let authReq = req.clone({
-    setHeaders: {
-      'Accept': 'application/json', // <--- Fundamental para Laravel
-      ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-    }
-  });
+  if (token) {
+    req = req.clone({
+      setHeaders: { Authorization: `Bearer ${token}`, 'Accept': 'application/json' },
+    });
+  }
 
-  return next(authReq).pipe(
+  return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
-      // Evitar bucles en login o refresh
+      // CASO 1: Bucle infinito o ruta prohibida
       if (req.url.includes('/refresh') || req.url.includes('/login')) {
+        // En lugar de subscribe(), encadenamos el logout
         return auth.logout().pipe(
+          // Si el logout falla (ej. servidor caído), no nos importa,
+          // capturamos ese error interno y devolvemos null para seguir
           catchError(() => of(null)),
+          // Al final, lanzamos el error original (401) para que la app reaccione
           switchMap(() => throwError(() => err))
         );
       }
 
-      // Si es 401, intentamos refrescar
+      // CASO 2: Error 401 estandar ‐> Intentar Refresh
       if (err.status === 401) {
         return auth.refreshToken().pipe(
           switchMap((res) => {
             const newToken = res.access_token;
             const retryReq = req.clone({
-              setHeaders: {
-                'Authorization': `Bearer ${newToken}`,
-                'Accept': 'application/json'
-              }
+              setHeaders: { Authorization: `Bearer ${newToken}` }
             });
             return next(retryReq);
           }),
           catchError((refreshErr) => {
+            // Si falla el refresh, hacemos logout encadenado correctamente
             return auth.logout().pipe(
               catchError(() => of(null)),
               switchMap(() => throwError(() => refreshErr))
@@ -46,6 +46,7 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
           })
         );
       }
+
       return throwError(() => err);
     })
   );

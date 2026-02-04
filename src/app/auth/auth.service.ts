@@ -7,6 +7,7 @@ import { LoginResponse, User } from './auth.model';
 export class AuthService {
   private api = 'http://127.0.0.1:8000/api';
   private userSubject = new BehaviorSubject<User | null>(null);
+
   user$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient) {}
@@ -29,24 +30,11 @@ export class AuthService {
   */
 
   logout() {
-    const token = this.getAccessToken();
-    return this.http.post(`${this.api}/logout`, {}, {
-      headers: { 'Authorization': `Bearer ${token}` } // <--- Forzamos el header aquí
-    }).pipe(
-      finalize(() => this.clearTokens())
-    );
+    return this.http.post(`${this.api}/logout`, {}).pipe(finalize(() => this.clearTokens()))
   }
 
   getProfile() {
-    const token = localStorage.getItem('access_token');
-    return this.http.get<User>(`${this.api}/userProfile`, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    }).pipe(
-      tap(user => {
-        console.log('Datos recibidos del backend:', user); // Revisa la consola del navegador
-        this.userSubject.next(user); // <--- ESTO es lo que hace que se vea en el HTML
-      })
-    );
+    return this.http.get<User>(`${this.api}/me`).pipe(tap(user => this.userSubject.next(user)));
   }
 
   isAuthenticated(): boolean {

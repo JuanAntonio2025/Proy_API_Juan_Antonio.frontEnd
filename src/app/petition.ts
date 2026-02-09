@@ -4,16 +4,18 @@ import { Petition } from './models/petition';
 import { tap, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class PeticionService {
+
+export class PetitionService {
   private http = inject(HttpClient);
   private readonly API_URL = 'http://localhost:8000/api/peticiones';
+
   // ‐‐‐ State (Signals) ‐‐‐
   // Store privado de peticiones
   #peticiones = signal<Petition[]>([]);
   loading = signal<boolean>(false);
+
   // ‐‐‐ Selectors ‐‐‐
   // Exponemos las peticiones como solo lectura
-
   allPeticiones = this.#peticiones.asReadonly();
 
   fetchPeticiones() {
@@ -36,18 +38,18 @@ export class PeticionService {
   create(formData: FormData) {
     return this.http.post<{ data: Petition }>(this.API_URL, formData).pipe(
       tap(res => {
-// Añadimos la nueva petición al principio de la lista local
+        // Añadimos la nueva petición al principio de la lista local
         this.#peticiones.update(list => [res.data, ...list]);
       })
     );
   }
 
   update(id: number, formData: FormData) {
-// Truco para que Laravel acepte archivos en actualización
+    // Truco para que Laravel acepte archivos en actualización
     formData.append('_method', 'PUT');
     return this.http.post<{ data: Petition }>(`${this.API_URL}/${id}`, formData).pipe(
       tap(res => {
-// Actualizamos solo la petición modificada en la lista local
+        // Actualizamos solo la petición modificada en la lista local
         this.#peticiones.update(list =>
           list.map(p => p.id === id ? res.data : p)
         );

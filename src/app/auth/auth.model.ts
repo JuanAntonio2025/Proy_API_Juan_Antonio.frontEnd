@@ -1,5 +1,5 @@
 export interface LoginResponse {
-  user: boolean;
+  user: User; // Revisar esto
   access_token: string;
   refresh_token: string;
   expires_in: number;

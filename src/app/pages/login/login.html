@@ -1,3 +1,7 @@
+@if(errorMessage) {
+  <p>{{errorMessage}}</p>
+}
+
 <form (ngSubmit)="login()">
   <input [(ngModel)]="email" name="email" />
   <input [(ngModel)]="password" type="password" name="password" />

@@ -9,6 +9,7 @@ import { EditComponent } from './petition/edit/edit';
 import { ShowComponent } from './petition/show/show';
 import { HomeComponent } from './home/home/home';
 import { MineComponent } from './petition/mine/mine';
+import { SignedComponent } from './petition/signed/signed';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'peticiones/create', component: CreateComponent, canActivate: [authGuard] },
   { path: 'peticiones/edit/:id', component: EditComponent, canActivate: [authGuard] },
   { path: 'mis-peticiones', component: MineComponent, canActivate: [authGuard]},
+  { path: 'mis-firmas', component: SignedComponent, canActivate: [authGuard]},
   { path: 'peticiones/:id', component: ShowComponent}, // Detalle público
   { path: 'peticiones', component: ListComponent },
     // Auth

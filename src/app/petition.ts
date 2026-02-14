@@ -68,7 +68,7 @@ export class PetitionService {
   }
 
   firmar(id: number) {
-    return this.http.post<{ success: boolean, message: string }>(
+    return this.http.put<{ success: boolean, message: string }>(
       `${this.API_URL}/firmar/${id}`,
       {}
     );
@@ -84,5 +84,12 @@ export class PetitionService {
       .get<{ data: Petition[] }>('http://localhost:8000/api/mispeticiones')
       .pipe(map(res => res.data));
   }
+
+  getSignedPetitions() {
+    return this.http
+      .get<{ data: Petition[] }>('http://localhost:8000/api/misfirmas')
+      .pipe(map(res => res.data));
+  }
+
 }
 

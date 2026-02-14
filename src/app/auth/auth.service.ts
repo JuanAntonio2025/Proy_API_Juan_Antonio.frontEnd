@@ -56,6 +56,7 @@ export class AuthService {
     // 2. Guardar Usuario (Ahora sí viene en 'res.user')
     if (res.user) {
       this.currentUser.set(res.user);
+      this.userSubject.next(res.user);
       // Guardamos en localStorage para que al pulsar F5 no se olvide
       localStorage.setItem('user_data', JSON.stringify(res.user));
     }
@@ -65,6 +66,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user_data');
     this.currentUser.set(null); // Esto actualiza el Navbar al instante
+    this.userSubject.next(null);
     this.isLoggedIn.set(false);
     this.router.navigate(['/']); // Te manda al login
   }

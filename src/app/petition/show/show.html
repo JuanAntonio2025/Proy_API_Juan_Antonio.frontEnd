@@ -1,1 +1,172 @@
-<p>show works!</p>
+<div class="container mt-3">
+  @if (successMessage) {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ successMessage }}
+      <button type="button" class="btn-close" (click)="successMessage = ''" aria-label="Close"></button>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ errorMessage }}
+      <button type="button" class="btn-close" (click)="errorMessage = ''" aria-label="Close"></button>
+    </div>
+  }
+</div>
+
+<main class="container py-4">
+  @if (loading()) {
+    <p class="text-muted">Cargando...</p>
+  } @else if (peticion()) {
+
+    <div class="row">
+      <!-- CONTENIDO PRINCIPAL -->
+      <div class="col-lg-8">
+        <h1 class="pet-title">{{ peticion()!.title }}</h1>
+
+        <div class="d-flex gap-2 mb-3">
+          @if (isOwner()) {
+            <a class="btn btn-warning"
+               [routerLink]="['/peticiones/edit', peticion()!.id]">
+              Editar
+            </a>
+
+            <button class="btn btn-danger" (click)="delete()">
+              Eliminar
+            </button>
+          }
+        </div>
+
+        <div class="petition-hero-image-container mb-4">
+          <img
+            [src]="getImagenUrl()"
+            class="petition-hero-image"
+            [alt]="peticion()!.title">
+        </div>
+
+        <div class="mt-4">
+          <p>Destinatario: {{ peticion()!.addressee }}</p>
+        </div>
+
+        <div class="mt-4">
+          <h2 class="content-section-title">El problema</h2>
+          <p>{{ peticion()!.description }}</p>
+        </div>
+
+        <!-- CREADOR -->
+        <div class="creator-info">
+          <img
+            [src]="'https://placehold.co/40x40/585858/fff?text=' + (peticion()!.user?.name?.charAt(0)?.toUpperCase() ?? 'U')"
+            alt="Avatar del creador">
+
+          <div>
+            <div class="creator-name">{{ peticion()!.user?.name ?? 'Usuario' }}</div>
+            <div class="creator-desc">Creador/a de la Petición</div>
+          </div>
+        </div>
+
+        <!-- COMENTARIOS (estáticos por ahora) -->
+        <div class="mt-5">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="comment-header-title">Opiniones de firmantes</h3>
+          </div>
+
+          <div class="comment-item">
+            <div class="comment-meta fw-bold">Juan M.</div>
+            <p class="comment-text mb-0">"Es vital reducir la edad. ¡El diagnóstico temprano salva vidas!"</p>
+          </div>
+
+          <div class="comment-item">
+            <div class="comment-meta fw-bold">María G.</div>
+            <p class="comment-text mb-0">"Mi tía tuvo un diagnóstico tardío. Por favor, que esto cambie."</p>
+          </div>
+
+          <div class="comment-item">
+            <div class="comment-meta fw-bold">Pedro R.</div>
+            <p class="comment-text mb-0">"He firmado y compartido. Mucho ánimo."</p>
+          </div>
+
+          <div class="text-center mt-3">
+            <button class="btn btn-outline-dark me-2 fw-bold">
+              Ver todos los comentarios
+            </button>
+          </div>
+        </div>
+
+        <!-- CONTRIB -->
+        <div class="contrib-section-detail text-center">
+          <h2 class="fw-bold fs-5">Apoya el cambio<br>Hazte Socio</h2>
+
+          <div class="avatar-group-custom justify-content-center">
+            <img src="https://placehold.co/35x35/000000/fff?text=1" alt="Avatar 1">
+            <img src="https://placehold.co/35x35/f0ad4e/fff?text=2" alt="Avatar 2">
+            <img src="https://placehold.co/35x35/5cb85c/fff?text=3" alt="Avatar 3">
+            <img src="https://placehold.co/35x35/d9534f/fff?text=4" alt="Avatar 4">
+            <img src="https://placehold.co/35x35/5bc0de/fff?text=5" alt="Avatar 5">
+            <span class="ms-3 fw-bold align-self-center">+1.234</span>
+          </div>
+
+          <p class="small text-muted mb-3">
+            Change.org no depende de la política ni de personas influyentes y es una plataforma gratuita...
+          </p>
+
+          <button class="btn btn-yellow">Apoya a Change.org</button>
+
+          <p class="small text-muted mt-2 fw-bold">
+            ¿Nos apoyarás para proteger el poder de las personas para marcar la diferencia?
+          </p>
+        </div>
+      </div>
+
+      <!-- SIDEBAR DESKTOP -->
+      <div class="col-lg-4 d-none d-lg-block">
+        <div class="sidebar-sticky">
+          <div class="signature-box">
+            <h2 class="signature-count text-center">{{ peticion()!.signatories ?? 0 }}</h2>
+            <div class="signature-goal text-center">Firmas Verificadas</div>
+            <hr>
+
+            @if (!isLoggedIn()) {
+              <div class="d-grid">
+                <a routerLink="/login" class="btn btn-yellow fw-bold rounded-2 py-2">
+                  Firmar la petición
+                </a>
+              </div>
+            } @else {
+              <div class="d-grid">
+                <button class="btn btn-yellow fw-bold rounded-2 py-2" (click)="firmar()">
+                  Firmar la petición
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+  } @else {
+    <p class="text-muted">Petición no encontrada.</p>
+  }
+</main>
+
+<!-- BOTÓN FIJO MOBILE -->
+@if (peticion()) {
+  <div class="mobile-sign-fixed d-lg-none">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <div class="signature-count small">{{ peticion()!.signatories ?? 0 }}</div>
+        <div class="signature-goal small" style="line-height: 1;">Firmas Verificadas</div>
+      </div>
+
+      @if (!isLoggedIn()) {
+        <a routerLink="/login" class="btn btn-yellow rounded-2 py-2 fw-bold">
+          Firmar la petición
+        </a>
+      } @else {
+        <button class="btn btn-yellow rounded-2 py-2 fw-bold" (click)="firmar()">
+          Firmar la petición
+        </button>
+      }
+    </div>
+  </div>
+}

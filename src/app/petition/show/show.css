@@ -1,0 +1,200 @@
+:root {
+  --change-blue: #004c9e;
+  --change-yellow: #ffcc00;
+  --change-text-dark: #202020;
+  --change-light-bg: #f4f4f8;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--change-text-dark);
+  background-color: white;
+}
+
+.navbar-custom {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.btn-yellow {
+  background-color: var(--change-yellow);
+  color: var(--change-text-dark);
+  font-weight: 600;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.btn-yellow:hover {
+  background-color: #e6b800;
+  color: var(--change-text-dark);
+}
+
+.petition-hero-image-container {
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0.75rem;
+}
+
+.petition-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pet-title {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 992px) {
+  .pet-title {
+    font-size: 2.5rem;
+  }
+}
+
+.petition-subheader {
+  font-size: 1rem;
+  color: #585858;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-sticky {
+  position: sticky;
+  top: 75px;
+}
+
+.signature-box {
+  background-color: var(--change-light-bg);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.signature-count {
+  color: var(--change-text-dark);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.signature-goal {
+  font-size: 0.9rem;
+  color: #585858;
+  margin-bottom: 1rem;
+}
+
+.progress-bar-custom {
+  height: 8px;
+  background-color: var(--change-blue);
+}
+
+.mobile-sign-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #ddd;
+  z-index: 1000;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.content-section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: inline-block;
+  padding-bottom: 0.25rem;
+}
+
+.creator-info {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid #eee;
+}
+
+.creator-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+}
+
+.creator-name {
+  font-weight: 600;
+}
+
+.creator-desc {
+  font-size: 0.85rem;
+  color: #585858;
+}
+
+.comment-header-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.comment-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+.comment-meta {
+  font-size: 0.85rem;
+  color: #585858;
+  margin-bottom: 0.25rem;
+}
+
+.comment-text {
+  font-style: italic;
+}
+
+.contrib-section-detail {
+  background-color: var(--change-light-bg);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.avatar-group-custom {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.avatar-group-custom img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-right: -10px;
+  object-fit: cover;
+}
+
+.share-icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  color: white;
+  margin-right: 0.5rem;
+}
+
+.share-icon-whatsapp { background-color: #25D366; }
+.share-icon-facebook { background-color: #1877F2; }
+.share-icon-twitter { background-color: #1DA1F2; }
+.share-icon-link { background-color: #585858; }

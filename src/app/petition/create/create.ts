@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PetitionService } from '../../petition';
 import { Router } from '@angular/router';
+import { Category } from '../../models/petition';
 
 @Component({
   selector: 'app-create',
-  standalone:true,
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './create.html',
   styleUrl: './create.css',
@@ -15,8 +16,13 @@ export class CreateComponent {
   private fb = inject(FormBuilder);
   private petitionService = inject(PetitionService);
   private router = inject(Router);
+
   loading = signal(false);
+
+  categories = signal<Category[]>([]);
   fileToUpload: File | null = null;
+  fileError: string = '';
+
   itemForm = this.fb.group({
     title: ['', [Validators.required]],
     description: ['', [Validators.required]],
@@ -24,7 +30,16 @@ export class CreateComponent {
     category_id: ['', [Validators.required]]
   });
 
+  ngOnInit(): void {
+    // Necesitas un endpoint tipo GET /categories
+    this.petitionService.fetchCategories().subscribe({
+      next: (cats) => this.categories.set(cats),
+      error: () => this.categories.set([])
+    });
+  }
+
   onFileSelected(event: any) {
+    this.fileError = '';
     const file = event.target.files[0];
     if (file) this.fileToUpload = file;
   }

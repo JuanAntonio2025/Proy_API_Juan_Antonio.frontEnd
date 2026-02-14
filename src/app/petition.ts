@@ -2,6 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Petition } from './models/petition';
 import { tap, map } from 'rxjs';
+import { Category } from './models/petition';
 
 @Injectable({ providedIn: 'root' })
 
@@ -71,6 +72,17 @@ export class PetitionService {
       `${this.API_URL}/firmar/${id}`,
       {}
     );
+  }
+
+  fetchCategories() {
+    return this.http.get<{ data: Category[] }>('http://localhost:8000/api/categorias')
+      .pipe(map(res => res.data));
+  }
+
+  getMine() {
+    return this.http
+      .get<{ data: Petition[] }>('http://localhost:8000/api/mispeticiones')
+      .pipe(map(res => res.data));
   }
 }
 

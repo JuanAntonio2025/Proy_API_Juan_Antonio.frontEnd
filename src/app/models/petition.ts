@@ -3,7 +3,6 @@ import { PetitionFile } from "./petition-file";
 export interface Category {
   id: number;
   name: string;
-  descripcion?: string;
 }
 
 export interface User {

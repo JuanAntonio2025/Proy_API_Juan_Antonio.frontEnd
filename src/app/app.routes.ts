@@ -8,12 +8,14 @@ import { CreateComponent } from './petition/create/create';
 import { EditComponent } from './petition/edit/edit';
 import { ShowComponent } from './petition/show/show';
 import { HomeComponent } from './home/home/home';
+import { MineComponent } from './petition/mine/mine';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
     // Rutas de Peticiones
   { path: 'peticiones/create', component: CreateComponent, canActivate: [authGuard] },
   { path: 'peticiones/edit/:id', component: EditComponent, canActivate: [authGuard] },
+  { path: 'mis-peticiones', component: MineComponent, canActivate: [authGuard]},
   { path: 'peticiones/:id', component: ShowComponent}, // Detalle público
   { path: 'peticiones', component: ListComponent },
     // Auth

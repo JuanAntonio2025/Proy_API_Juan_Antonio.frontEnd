@@ -1,0 +1,48 @@
+<div class="container py-5">
+  <h1 class="mb-4 fw-bold">Mis peticiones</h1>
+
+  @if (cargando) {
+    <p>Cargando...</p>
+  } @else if (petitions.length === 0) {
+    <div class="alert alert-info">
+      Aún no has creado ninguna petición.
+    </div>
+  } @else {
+    <div class="row g-4">
+      @for (petition of petitions; track petition.id) {
+        <div class="col-sm-6 col-lg-3">
+          <a
+            class="text-decoration-none text-dark"
+            [routerLink]="['/peticiones', petition.id]">
+
+            <div class="petition-card">
+
+              <div class="petition-image-container">
+                <img
+                  [src]="petition.image"
+                  class="petition-image"
+                  [alt]="petition.title">
+              </div>
+
+              <div class="petition-details">
+                <span class="petition-category">
+                  {{ petition.category?.name ?? 'Sin categoría' }}
+                </span>
+
+                <h3 class="petition-title">
+                  {{ petition.title }}
+                </h3>
+
+                <p class="petition-signatures">
+                  {{ petition.signatories }} firmas
+                </p>
+              </div>
+
+            </div>
+          </a>
+        </div>
+      }
+    </div>
+  }
+</div>
+

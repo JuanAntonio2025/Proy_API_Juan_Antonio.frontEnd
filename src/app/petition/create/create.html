@@ -1,1 +1,134 @@
-<p>create works!</p>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+
+        <div class="card-header bg-black text-white">
+          <h3 class="mb-0">Crear una Nueva Petición</h3>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+            <!-- TÍTULO -->
+            <div class="mb-3">
+              <label class="form-label fw-bold" for="title">Título de la Petición</label>
+
+              <input
+                id="title"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="itemForm.get('title')?.touched && itemForm.get('title')?.invalid"
+                formControlName="title"
+                required
+              />
+
+              @if (itemForm.get('title')?.touched && itemForm.get('title')?.invalid) {
+                <div class="invalid-feedback">
+                  El título es obligatorio.
+                </div>
+              }
+            </div>
+
+            <!-- CATEGORÍA -->
+            <div class="mb-3">
+              <label class="form-label fw-bold" for="category_id">Categoría</label>
+
+              <select
+                id="category_id"
+                class="form-select"
+                [class.is-invalid]="itemForm.get('category_id')?.touched && itemForm.get('category_id')?.invalid"
+                formControlName="category_id"
+                required>
+
+                <option value="" disabled>Selecciona una categoría</option>
+
+                @for (cat of categories(); track cat.id) {
+                  <option [value]="cat.id">{{ cat.name }}</option>
+                }
+              </select>
+
+              @if (itemForm.get('category_id')?.touched && itemForm.get('category_id')?.invalid) {
+                <div class="invalid-feedback">
+                  Debes seleccionar una categoría.
+                </div>
+              }
+            </div>
+
+            <!-- DESTINATARIO -->
+            <div class="mb-3">
+              <label class="form-label fw-bold" for="addressee">Destinatario (Persona o Entidad)</label>
+
+              <input
+                id="addressee"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="itemForm.get('addressee')?.touched && itemForm.get('addressee')?.invalid"
+                formControlName="addressee"
+                required
+              />
+
+              <div class="form-text">¿A quién va dirigida esta petición?</div>
+
+              @if (itemForm.get('addressee')?.touched && itemForm.get('addressee')?.invalid) {
+                <div class="invalid-feedback">
+                  El destinatario es obligatorio.
+                </div>
+              }
+            </div>
+
+            <!-- DESCRIPCIÓN -->
+            <div class="mb-3">
+              <label class="form-label fw-bold" for="description">Descripción / El Problema</label>
+
+              <textarea
+                id="description"
+                rows="5"
+                class="form-control"
+                [class.is-invalid]="itemForm.get('description')?.touched && itemForm.get('description')?.invalid"
+                formControlName="description"
+                required></textarea>
+
+              @if (itemForm.get('description')?.touched && itemForm.get('description')?.invalid) {
+                <div class="invalid-feedback">
+                  La descripción es obligatoria.
+                </div>
+              }
+            </div>
+
+            <!-- FOTO -->
+            <div class="mb-3">
+              <label class="form-label fw-bold" for="file">Foto para la Petición</label>
+
+              <input
+                id="file"
+                type="file"
+                class="form-control"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+              />
+
+              <div class="form-text">Sube una imagen relevante para tu petición</div>
+
+              @if (fileError) {
+                <div class="text-danger small mt-1">{{ fileError }}</div>
+              }
+            </div>
+
+            <!-- BOTÓN -->
+            <div class="d-grid">
+              <button
+                type="submit"
+                class="btn btn-yellow fw-bold py-2"
+                [disabled]="loading()">
+                @if (loading()) { Publicando... } @else { Publicar Petición }
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

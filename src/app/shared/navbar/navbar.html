@@ -16,7 +16,7 @@
       @if (isLoggedIn()) {
         <ul class="navbar-nav me-auto ms-lg-3">
           <li class="nav-item">
-            <a class="nav-link fw-bold" routerLink="/petition/list">
+            <a class="nav-link fw-bold" routerLink="/mis-peticiones">
               Mis peticiones
             </a>
           </li>
@@ -36,7 +36,7 @@
         </a>
 
         @if (isLoggedIn()) {
-          <a routerLink="/petition/create"
+          <a routerLink="/peticiones/create"
              class="btn btn-outline-dark fw-bold me-2">
             Inicia una petición
           </a>

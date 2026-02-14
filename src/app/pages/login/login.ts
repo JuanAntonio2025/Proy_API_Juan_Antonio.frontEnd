@@ -25,7 +25,7 @@ export class LoginComponent {
       .subscribe({
         next: () => {
           // Si va bien, redirigimos al listado de peticiones
-          this.router.navigate(['/peticiones']);
+          this.router.navigate(['/']);
         },
         error: (err: { status: number; }) => {
           console.error('LOGIN ERROR', err);

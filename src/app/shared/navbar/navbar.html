@@ -1,1 +1,65 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-expand-lg bg-white border-bottom py-3 sticky-top">
+  <div class="container">
+
+    <a class="navbar-brand fw-bolder text-danger" routerLink="/">
+      Change.org
+    </a>
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+      @if (isLoggedIn()) {
+        <ul class="navbar-nav me-auto ms-lg-3">
+          <li class="nav-item">
+            <a class="nav-link fw-bold" routerLink="/petition/list">
+              Mis peticiones
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-bold" routerLink="/petition/signed">
+              Mis firmas
+            </a>
+          </li>
+        </ul>
+      }
+
+      <div class="d-flex align-items-center ms-auto">
+
+        <a routerLink="/petition/list"
+           class="btn btn-link fw-bold text-dark me-2">
+          Ver Peticiones
+        </a>
+
+        @if (isLoggedIn()) {
+          <a routerLink="/petition/create"
+             class="btn btn-outline-dark fw-bold me-2">
+            Inicia una petición
+          </a>
+
+          <button class="btn btn-danger fw-bold"
+                  (click)="logout()">
+            Cerrar sesión
+          </button>
+        } @else {
+          <a routerLink="/login"
+             class="btn btn-outline-dark fw-bold me-2">
+            Entrar
+          </a>
+
+          <a routerLink="/register"
+             class="btn btn-outline-dark fw-bold">
+            Registrarse
+          </a>
+        }
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+

@@ -1,1 +1,97 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --change-blue: #004c9e;
+  --change-yellow: #ffcc00;
+  --change-text-dark: #202020;
+  --change-light-bg: #f4f4f8;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--change-text-dark);
+}
+
+/* Botones reutilizables */
+.btn-yellow {
+  background-color: var(--change-yellow);
+  color: var(--change-text-dark);
+  font-weight: 600;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+}
+
+.btn-yellow:hover {
+  background-color: #e6b800;
+  color: var(--change-text-dark);
+}
+
+.btn-outline-dark {
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+}
+
+/* Enlaces dentro de botones (navbar) */
+.btn-enlaces {
+  text-decoration: none;
+  color: black;
+}
+
+.btn-enlaces:hover {
+  text-decoration: none;
+  color: var(--change-light-bg);
+}
+
+/* Cards reutilizables (home + list + show) */
+.petition-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.petition-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.petition-image-container {
+  height: 150px;
+  overflow: hidden;
+}
+
+.petition-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.petition-details {
+  padding: 1rem;
+}
+
+.petition-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--change-blue);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.petition-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.petition-signatures {
+  font-size: 0.85rem;
+  color: #585858;
+  font-weight: 500;
+}
+

@@ -1,78 +1,71 @@
-<h2>Register</h2>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
 
-<form (ngSubmit)="register()" #form="ngForm" novalidate>
+      @if (errorMessage) {
+        <div class="alert alert-danger mb-4">
+          {{ errorMessage }}
+        </div>
+      }
 
-  <!-- ERROR DEL BACKEND -->
-  <div *ngIf="errorMessage" class="error-backend">
-    {{ errorMessage }}
+      <div class="card shadow-lg">
+        <div class="card-body p-4">
+
+          <form (ngSubmit)="register()">
+
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="formData.name"
+                name="name"
+                required
+                autofocus
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                [(ngModel)]="formData.email"
+                name="email"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                [(ngModel)]="formData.password"
+                name="password"
+                required
+              />
+            </div>
+
+            <div class="d-flex align-items-center justify-content-end mt-4">
+              <a
+                routerLink="/login"
+                class="text-decoration-underline text-muted me-3">
+                Already registered?
+              </a>
+
+              <button type="submit" class="btn btn-primary">
+                Register
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
   </div>
+</div>
 
-  <!-- NAME -->
-  <div>
-    <label>Name</label>
-    <input
-      type="text"
-      name="name"
-      [(ngModel)]="formData.name"
-      required
-      #name="ngModel"
-    />
-
-    <small class="error" *ngIf="name.invalid && name.touched">
-      El nombre es obligatorio
-    </small>
-  </div>
-
-  <!-- EMAIL -->
-  <div>
-    <label>Email</label>
-    <input
-      type="email"
-      name="email"
-      [(ngModel)]="formData.email"
-      required
-      email
-      #email="ngModel"
-    />
-
-    <small class="error" *ngIf="email.errors?.['required'] && email.touched">
-      El email es obligatorio
-    </small>
-
-    <small class="error" *ngIf="email.errors?.['email'] && email.touched">
-      El formato del email no es válido
-    </small>
-  </div>
-
-  <!-- PASSWORD -->
-  <div>
-    <label>Password</label>
-    <input
-      type="password"
-      name="password"
-      [(ngModel)]="formData.password"
-      required
-      minlength="6"
-      #password="ngModel"
-    />
-
-    <small class="error" *ngIf="password.errors?.['required'] && password.touched">
-      La contraseña es obligatoria
-    </small>
-
-    <small class="error" *ngIf="password.errors?.['minlength'] && password.touched">
-      La contraseña debe tener al menos 6 caracteres
-    </small>
-  </div>
-
-  <button type="submit" [disabled]="form.invalid">
-    Register
-  </button>
-
-  <p>
-    Already have an account?
-    <a routerLink="/login">Login</a>
-  </p>
-
-</form>
 

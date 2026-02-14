@@ -1,26 +1,45 @@
 import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
-  selector: 'app‐home',
+  selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, NgOptimizedImage],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
 export class HomeComponent {
   terminoBusqueda: string = '';
 
+  private chipSeleccionado = '';
+
   constructor(private router: Router) {}
 
   buscar() {
     if (this.terminoBusqueda.trim()) {
-      // Navegamos a /peticiones?q=termino
-      this.router.navigate(['/peticiones'], { queryParams: { q: this.terminoBusqueda } });
+      this.router.navigate(
+        ['/peticiones'],
+        { queryParams: { q: this.terminoBusqueda } }
+      );
     } else {
       this.router.navigate(['/peticiones']);
     }
+  }
+
+  activeChip() {
+    return this.chipSeleccionado;
+  }
+
+  setChip(chip: string) {
+    this.chipSeleccionado = chip;
+
+    // (opcional) navegar ya filtrado
+    this.router.navigate(
+      ['/peticiones'],
+      { queryParams: { category: chip } }
+    );
   }
 }
 

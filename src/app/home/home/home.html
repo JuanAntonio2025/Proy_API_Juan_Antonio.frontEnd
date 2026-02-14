@@ -1,1 +1,195 @@
-<p>home works!</p>
+<section class="hero-section">
+  <div class="container">
+
+    <h1 class="hero-title">
+      El cambio <br class="d-lg-none" /> comienza aquí.
+    </h1>
+
+    <p class="hero-subtitle">
+      Únete a 567.822.918 personas que están impulsando un cambio real en sus comunidades.
+    </p>
+
+    <div class="d-flex justify-content-center mb-5">
+      <a routerLink="/peticiones/create" class="btn btn-yellow me-3">
+        Crear una petición
+      </a>
+
+      <a routerLink="/peticiones/create" class="btn btn-outline-dark">
+        Comenzar con IA
+      </a>
+    </div>
+
+    <div class="row g-3 justify-content-center position-relative">
+
+      <div class="col-12 col-lg-3">
+        <div class="petition-card">
+          <div class="petition-image-container">
+            <img ngSrc="assets/images/changeorg_cuantovaleunavida_entregafirmas5.jpg"
+                 class="petition-image"
+                 alt="Petición 1" height="1200" width="1600">
+          </div>
+          <div class="petition-details p-2">
+            <span class="petition-category">Victoria</span>
+            <p class="petition-signatures">157.929 firmas</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-3">
+        <div class="petition-card">
+          <div class="petition-image-container">
+            <img src="assets/images/desiderioysoledad_los3 (1).webp"
+                 class="petition-image"
+                 alt="Petición 2">
+          </div>
+          <div class="petition-details p-2">
+            <span class="petition-category">Victoria</span>
+            <p class="petition-signatures">96.240 firmas</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-3 d-none d-lg-block">
+        <div class="petition-card">
+          <div class="petition-image-container">
+            <img src="assets/images/entrega_firmas_guardias_medicas_4r (1).webp"
+                 class="petition-image"
+                 alt="Petición 3">
+          </div>
+          <div class="petition-details p-2">
+            <span class="petition-category">Victoria</span>
+            <p class="petition-signatures">141.336 firmas</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-3 d-none d-lg-block">
+        <div class="petition-card">
+          <div class="petition-image-container">
+            <img src="assets/images/pornagore_elpais.webp"
+                 class="petition-image"
+                 alt="Petición 4">
+          </div>
+          <div class="petition-details p-2">
+            <span class="petition-category">Victoria</span>
+            <p class="petition-signatures">162.845 firmas</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="how-it-works-section">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-4">
+      Usar la plataforma de peticiones n.º 1 del mundo es fácil
+    </h2>
+
+    <div class="row text-center mt-5">
+      <div class="col-md-4 mb-4">
+        <div class="step-icon mx-auto">1</div>
+        <p class="step-title">Crea una petición en dos minutos</p>
+        <p class="text-muted">Más de 2.000 nuevas cada día</p>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="step-icon mx-auto">2</div>
+        <p class="step-title">
+          Consigue apoyos gracias a nuestra gran comunidad
+        </p>
+        <p class="text-muted">Más de 500.000 firmas diarias</p>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="step-icon mx-auto">3</div>
+        <p class="step-title">
+          Llega hasta los responsables gracias a nuestra red
+        </p>
+        <p class="text-muted">Más de 1.000 notificados a diario</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a class="text-decoration-none text-muted">
+        Lee nuestros consejos y guías sobre cómo crear una petición
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cause-support-section">
+  <div class="container">
+
+    <h2 class="fw-bold mb-4 text-center text-md-start">
+      Apoya causas que te importan
+    </h2>
+
+    <p class="text-muted mb-4 text-center text-md-start">
+      Encuentra peticiones que te conmuevan y alza tu voz para lograr el cambio.
+    </p>
+
+    <div class="d-flex flex-wrap mb-4 justify-content-center justify-content-md-start">
+      @for (chip of ['Sanidad','Animales','Medio Ambiente','Educación','Justicia Económica']; track chip) {
+        <span
+          class="filter-chip"
+          [class.active]="activeChip() === chip"
+          (click)="setChip(chip)">
+          {{ chip }}
+        </span>
+      }
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Card 1 -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="petition-card">
+          <div class="petition-image-container">
+            <img src="assets/images/JACarMOCmNQsrUQ-800x450-noPad.webp"
+                 class="petition-image"
+                 alt="Salud">
+          </div>
+          <div class="petition-details">
+            <span class="petition-category">Salud</span>
+            <h3 class="petition-title">
+              Mi hija se suicidó con 15 años...
+            </h3>
+            <p class="petition-signatures">260.564 firmas</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Repite igual las otras 3 cards -->
+      <!-- (idénticas al Blade, solo cambia src a assets/images/...) -->
+
+    </div>
+  </div>
+</section>
+
+<section class="contrib-section">
+  <div class="container">
+    <div class="row align-items-center">
+
+      <div class="col-md-6 mb-4 mb-md-0">
+        <h2 class="contrib-title">
+          Apoya el cambio <br> Contribuye hoy
+        </h2>
+        <p class="contrib-text">
+          Change.org existe gracias a las donaciones que aportan millones de usuarios como tú.
+        </p>
+        <button class="btn btn-outline-dark">
+          Contribuir
+        </button>
+      </div>
+
+      <div class="col-md-6 d-flex justify-content-center">
+        <img src="assets/images/contribuye.webp"
+             class="img-fluid"
+             alt="Comunidad Change.org" height="400" width="576">
+      </div>
+
+    </div>
+  </div>
+</section>

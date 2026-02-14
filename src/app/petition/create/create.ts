@@ -60,7 +60,7 @@ export class CreateComponent {
       }
 
       this.petitionService.create(formData).subscribe({
-        next: () => this.router.navigate(['/peticiones']),
+        next: () => this.router.navigate(['/mis-peticiones']),
         error: (err) => this.loading.set(false)
       });
     } else {

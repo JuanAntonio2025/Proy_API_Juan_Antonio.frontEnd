@@ -1,1 +1,109 @@
-<p>list works!</p>
+<!-- HERO -->
+<div class="hero text-center">
+  <div class="container container-lg">
+    <h1 class="hero-title mb-4">Descubre tu próxima causa</h1>
+    <p class="lead text-muted mb-5">
+      Explora millones de peticiones y encuentra las que te interesan
+    </p>
+  </div>
+</div>
+
+<!-- EXPLORAR -->
+<div class="container container-lg">
+  <h2 class="h4 fw-bold mb-4 mt-4">Explorar</h2>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="explore-card">
+        <div class="icon">
+          <lucide-icon name="map-pin" [size]="32"></lucide-icon>
+        </div>
+        <p class="mb-0 fw-semibold">Cerca de ti</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="explore-card">
+        <div class="icon">
+          <lucide-icon name="line-chart" [size]="32"></lucide-icon>
+        </div>
+        <p class="mb-0 fw-semibold">Populares</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="explore-card">
+        <div class="icon">
+          <lucide-icon name="trophy" [size]="32"></lucide-icon>
+        </div>
+        <p class="mb-0 fw-semibold">Victorias</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LISTADO -->
+<section class="cause-support-section">
+  <div class="container">
+
+    <h2 class="fw-bold mb-4 text-center text-md-start">
+      Apoya causas que te importan
+    </h2>
+
+    <p class="text-muted mb-4 text-center text-md-start">
+      Encuentra peticiones que te conmuevan y alza tu voz para lograr el cambio.
+    </p>
+
+    <!-- LOADING -->
+    @if (cargando) {
+      <p class="text-muted">Cargando peticiones...</p>
+    }
+
+    <!-- GRID -->
+    @if (!cargando && petitions.length > 0) {
+      <div class="row g-4">
+
+        @for (petition of petitions; track petition.id) {
+          <div class="col-sm-6 col-lg-3">
+            <a
+              [routerLink]="['/peticiones', petition.id]"
+              class="text-decoration-none text-dark">
+
+              <div class="petition-card">
+                <div class="petition-image-container">
+                  <img
+                    [src]="petition.image ?? 'assets/images/placeholder.webp'"
+                    class="petition-image"
+                    [alt]="petition.title">
+                </div>
+
+                <div class="petition-details">
+                  <span class="petition-category">
+                    {{ petition.category?.name }}
+                  </span>
+
+                  <h3 class="petition-title">
+                    {{ petition.title }}
+                  </h3>
+
+                  <p class="petition-signatures">
+                    {{ petition.signatories }} firmas
+                  </p>
+                </div>
+              </div>
+
+            </a>
+          </div>
+        }
+
+      </div>
+    }
+
+    <!-- EMPTY -->
+    @if (!cargando && petitions.length === 0) {
+      <p class="text-muted">No se encontraron peticiones.</p>
+    }
+
+  </div>
+</section>
+

@@ -41,7 +41,11 @@ export class AuthService {
   getProfile() {
     return this.http
       .get<User>(`${this.api}/me`)
-      .pipe(tap(user => this.userSubject.next(user)));
+      .pipe(tap(user => {
+        this.userSubject.next(user);
+        this.currentUser.set(user);
+        localStorage.setItem('user_data', JSON.stringify(user));
+      }))
   }
 
   isAuthenticated(): boolean {

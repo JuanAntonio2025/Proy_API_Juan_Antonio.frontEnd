@@ -36,6 +36,11 @@
         </a>
 
         @if (isLoggedIn()) {
+          <a routerLink="/profile"
+             class="btn btn-outline-dark fw-bold me-2">
+            Mi perfil
+          </a>
+
           <a routerLink="/peticiones/create"
              class="btn btn-outline-dark fw-bold me-2">
             Inicia una petición

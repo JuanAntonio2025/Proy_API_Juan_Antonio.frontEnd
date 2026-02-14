@@ -1,0 +1,17 @@
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-info {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}

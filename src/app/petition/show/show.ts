@@ -71,7 +71,9 @@ export class ShowComponent implements OnInit {
 
   getImagenUrl(): string {
     const pet = this.peticion();
-    const filePath = pet?.files?.[0]?.file_path;
+    const files = pet?.files ?? [];
+    const last = files.length ? files[files.length - 1] : null;
+    const filePath = last?.file_path;
 
     if (!filePath) {
       return 'assets/images/placeholder.webp';

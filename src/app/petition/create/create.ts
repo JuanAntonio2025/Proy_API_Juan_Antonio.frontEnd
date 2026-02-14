@@ -48,11 +48,17 @@ export class CreateComponent {
     if (this.itemForm.valid && this.fileToUpload) {
       this.loading.set(true);
       const formData = new FormData();
+
       formData.append('title', this.itemForm.value.title!);
       formData.append('description', this.itemForm.value.description!);
       formData.append('addressee', this.itemForm.value.addressee!);
       formData.append('category_id', this.itemForm.value.category_id!);
       formData.append('file', this.fileToUpload);
+
+      if (this.fileToUpload) {
+        formData.append('file', this.fileToUpload);
+      }
+
       this.petitionService.create(formData).subscribe({
         next: () => this.router.navigate(['/peticiones']),
         error: (err) => this.loading.set(false)

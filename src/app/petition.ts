@@ -46,16 +46,8 @@ export class PetitionService {
   }
 
   update(id: number, formData: FormData) {
-    // Truco para que Laravel acepte archivos en actualización
     formData.append('_method', 'PUT');
-    return this.http.post<{ data: Petition }>(`${this.API_URL}/${id}`, formData).pipe(
-      tap(res => {
-        // Actualizamos solo la petición modificada en la lista local
-        this.#peticiones.update(list =>
-          list.map(p => p.id === id ? res.data : p)
-        );
-      })
-    );
+    return this.http.post<{ data: Petition }>(`${this.API_URL}/${id}`, formData);
   }
 
   delete(id: number) {

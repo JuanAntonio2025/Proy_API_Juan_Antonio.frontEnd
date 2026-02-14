@@ -1,0 +1,16 @@
+.petition-hero-image-container {
+  width: 100%;
+  max-width: 100%;
+  height: 260px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f4f4f8;
+}
+
+.petition-hero-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;          /* ✅ llena, pero recorta */
+}
+

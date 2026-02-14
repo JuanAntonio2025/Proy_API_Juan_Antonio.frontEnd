@@ -6,7 +6,7 @@ import {NgOptimizedImage} from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, FormsModule, NgOptimizedImage],
+  imports: [RouterLink, FormsModule],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
@@ -35,7 +35,6 @@ export class HomeComponent {
   setChip(chip: string) {
     this.chipSeleccionado = chip;
 
-    // (opcional) navegar ya filtrado
     this.router.navigate(
       ['/peticiones'],
       { queryParams: { category: chip } }

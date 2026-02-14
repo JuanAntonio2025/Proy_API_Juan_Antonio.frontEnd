@@ -7,7 +7,7 @@ import { AuthService } from '../../auth/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -20,18 +20,17 @@ export class LoginComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   login() {
-    this.errorMessage = ''; // Reseteamos errores previos
+    this.errorMessage = '';
     this.auth.login({ email: this.email, password: this.password })
       .subscribe({
         next: () => {
-          // Si va bien, redirigimos al listado de peticiones
           this.router.navigate(['/']);
         },
         error: (err: { status: number; }) => {
           console.error('LOGIN ERROR', err);
           if (err.status === 401) {
             this.errorMessage = 'El email o la contraseña son incorrectos.';
-            this.password = ''; // Borramos pass para facilitar reintento
+            this.password = '';
           } else {
             this.errorMessage = 'Ocurrió un error inesperado. Inténtalo luego.';
           }

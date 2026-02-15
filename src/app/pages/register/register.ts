@@ -33,8 +33,10 @@ export class RegisterComponent {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        if (err.status === 409 || err.status === 422) {
+        if (err.status === 409) {
           this.errorMessage = 'Este correo electrónico ya está registrado.';
+        } else if (err.status === 422) {
+          this.errorMessage = 'Algunos datos son inválidos';
         } else {
           this.errorMessage = 'Ocurrió un error al registrarse.';
         }

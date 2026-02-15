@@ -30,9 +30,11 @@
               <input
                 type="email"
                 class="form-control"
-                [(ngModel)]="formData.email"
                 name="email"
+                [(ngModel)]="formData.email"
                 required
+                email
+                #emailCtrl="ngModel"
               />
             </div>
 

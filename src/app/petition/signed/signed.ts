@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PetitionService } from '../../petition';
 import { Petition } from '../../models/petition';
+import { API_URL } from '../../core/config/api.config';
+import { resolvePetitionImage } from '../../core/utils/image.util';
 
 type PetitionVM = Petition & { image: string };
 
@@ -14,6 +16,7 @@ type PetitionVM = Petition & { image: string };
 })
 export class SignedComponent implements OnInit {
   private petitionService = inject(PetitionService);
+  private apiUrl = inject(API_URL);
 
   petitions: PetitionVM[] = [];
   loading = true;
@@ -23,9 +26,7 @@ export class SignedComponent implements OnInit {
       next: data => {
         this.petitions = data.map(p => ({
           ...p,
-          image: p.files?.length
-            ? `http://localhost:8000/storage/${p.files[0].file_path}`
-            : 'assets/images/placeholder.webp'
+          image: resolvePetitionImage(this.apiUrl, p),
         }));
         this.loading = false;
       },

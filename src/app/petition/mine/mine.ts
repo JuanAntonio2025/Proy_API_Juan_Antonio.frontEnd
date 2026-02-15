@@ -2,8 +2,9 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PetitionService } from '../../petition';
 import { Petition } from '../../models/petition';
+import { RouterLink } from '@angular/router';
 import { API_URL } from '../../core/config/api.config';
-import {RouterLink} from '@angular/router';
+import { resolvePetitionImage } from '../../core/utils/image.util';
 
 type PetitionVM = Petition & { image: string };
 
@@ -26,7 +27,7 @@ export class MineComponent {
       next: data => {
         this.petitions = data.map(p => ({
           ...p,
-          image: this.resolveImage(p),
+          image: resolvePetitionImage(this.apiUrl, p),
         }));
         this.cargando = false;
       },
@@ -34,14 +35,6 @@ export class MineComponent {
         this.cargando = false;
       }
     });
-  }
-
-  private resolveImage(p: Petition): string {
-    const filePath = p.files?.[0]?.file_path;
-    if (!filePath) return 'assets/images/placeholder.webp';
-
-    const cleaned = filePath.startsWith('/') ? filePath.slice(1) : filePath;
-    return `${this.apiUrl}/storage/${cleaned}`;
   }
 }
 

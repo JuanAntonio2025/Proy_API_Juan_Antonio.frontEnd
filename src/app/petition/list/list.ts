@@ -3,8 +3,9 @@ import { PetitionService } from '../../petition';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Petition } from '../../models/petition';
-import { API_URL } from '../../core/config/api.config';
 import {LucideAngularModule} from 'lucide-angular';
+import { API_URL } from '../../core/config/api.config';
+import { resolvePetitionImage } from '../../core/utils/image.util';
 
 type PetitionVM = Petition & { image: string };
 
@@ -17,21 +18,10 @@ type PetitionVM = Petition & { image: string };
 })
 export class ListComponent {
   private apiUrl = inject(API_URL);
-  public peticionService = inject(PetitionService);
   private route = inject(ActivatedRoute);
+  public peticionService = inject(PetitionService);
   public petitions: PetitionVM[] = [];
   public cargando: boolean = true;
-
-  private resolveImage(p: Petition): string { // Trae la imagen de cada petición para mostrarla
-    const filePath = p.files?.[0]?.file_path;
-
-    if (!filePath) return 'assets/images/placeholder.webp';
-    if (/^https?:\/\//i.test(filePath)) return filePath;
-
-    const cleaned = filePath.startsWith('/') ? filePath.slice(1) : filePath;
-
-    return `${this.apiUrl}/storage/${cleaned}`;
-  }
 
   ngOnInit(): void { // Trae las peticiones usando el metodo "fetchPeticiones()" de PetitionService
     this.route.queryParams.subscribe(params => {
@@ -41,7 +31,7 @@ export class ListComponent {
         next: (data: Petition[]) => {
           this.petitions = data.map(p => ({
             ...p,
-            image: this.resolveImage(p)
+            image: resolvePetitionImage(this.apiUrl, p),
           }));
           this.cargando = false;
         },

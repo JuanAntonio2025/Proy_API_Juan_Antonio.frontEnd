@@ -64,6 +64,44 @@
 
       </div>
     </div>
+
+    @if (auth.showWelcome()) {
+      <div class="modal-backdrop fade show"></div>
+
+      <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h5 class="modal-title">
+                ¡Bienvenido/a!
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                (click)="closeWelcome()">
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <p>
+                Hola <strong>{{ auth.currentUser()?.name }}</strong>,
+                nos alegra verte de nuevo!
+              </p>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                class="btn btn-primary"
+                (click)="closeWelcome()">
+                Continuar
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    }
   </div>
 </nav>
 

@@ -33,7 +33,6 @@ export class RegisterComponent {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        // 409: Conflicto (Email duplicado), 422: Validación fallida
         if (err.status === 409 || err.status === 422) {
           this.errorMessage = 'Este correo electrónico ya está registrado.';
         } else {

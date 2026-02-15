@@ -9,7 +9,6 @@ import {LucideAngularModule} from 'lucide-angular';
 
 type PetitionVM = Petition & { image: string };
 
-
 @Component({
   selector: 'app-list',
   standalone:true,
@@ -19,30 +18,25 @@ type PetitionVM = Petition & { image: string };
 })
 export class ListComponent {
   private apiUrl = inject(API_URL);
-  peticionService = inject(PetitionService);
-  private authService = inject(AuthService);
+  public peticionService = inject(PetitionService);
   private route = inject(ActivatedRoute);
   public petitions: PetitionVM[] = [];
   public cargando: boolean = true;
 
-  private resolveImage(p: Petition): string {
+  private resolveImage(p: Petition): string { // Trae la imagen de cada petición para mostrarla
     const filePath = p.files?.[0]?.file_path;
 
     if (!filePath) return 'assets/images/placeholder.webp';
-
-    // Si ya es URL absoluta
     if (/^https?:\/\//i.test(filePath)) return filePath;
 
-    // file_path viene como "fotos/xxx.jpg"
-    // lo servimos como /storage/fotos/xxx.jpg
     const cleaned = filePath.startsWith('/') ? filePath.slice(1) : filePath;
 
     return `${this.apiUrl}/storage/${cleaned}`;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { // Trae las peticiones usando el metodo "fetchPeticiones()" de PetitionService
     this.route.queryParams.subscribe(params => {
-      const busqueda = params['q'];
+      //const busqueda = params['q'];
       this.cargando = true;
       this.peticionService.fetchPeticiones().subscribe({
         next: (data: Petition[]) => {
@@ -59,14 +53,5 @@ export class ListComponent {
       });
 
     });
-  }
-
-  delete(id: number) {
-    if(confirm('¿Seguro?')) {
-      this.peticionService.delete(id).subscribe({
-        error: (err) => alert('No puedes borrar esto (quizás no eres el dueño)'),
-        next: () => this.petitions = this.petitions.filter(p => p.id !== id)
-      });
-    }
   }
 }

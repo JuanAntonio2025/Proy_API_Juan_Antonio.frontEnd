@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { PetitionService } from '../../petition';
 import { Petition } from '../../models/petition';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { DatePipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-show',
   standalone: true,
-  imports: [RouterLink, DatePipe, CommonModule],
+  imports: [RouterLink, CommonModule],
   templateUrl: './show.html',
   styleUrls: ['./show.css']
 })
@@ -45,17 +45,14 @@ export class ShowComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) this.cargarPeticion(Number(id));
 
-    // ✅ 1) valor inmediato (sin esperar al /me)
     this.currentUserId = this.getUserIdFromStorage();
 
-    // ✅ 2) luego ya sincronizamos con el backend si hace falta
     this.authService.user$.subscribe(user => {
       this.currentUserId = user?.id ?? null;
     });
 
     this.authService.loadUserIfNeeded();
   }
-
 
   cargarPeticion(id: number) {
     this.petitionService.getById(id).subscribe({
@@ -86,7 +83,6 @@ export class ShowComponent implements OnInit {
     return `http://localhost:8000/storage/${cleaned}`;
   }
 
-
   delete() {
     const pet = this.peticion();
     if (!pet?.id) return;
@@ -107,7 +103,6 @@ export class ShowComponent implements OnInit {
     return !!ownerId && !!me && ownerId === me;
   }
 
-
   firmar() {
     const pet = this.peticion();
     if (!pet?.id) return;
@@ -118,7 +113,6 @@ export class ShowComponent implements OnInit {
     this.petitionService.firmar(pet.id).subscribe({
       next: () => {
         this.successMessage = 'Has firmado la petición correctamente.';
-        // Actualizamos contador local
         this.peticion.set({
           ...pet,
           signatories: (pet.signatories ?? 0) + 1

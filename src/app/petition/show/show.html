@@ -20,7 +20,6 @@
   } @else if (peticion()) {
 
     <div class="row">
-      <!-- CONTENIDO PRINCIPAL -->
       <div class="col-lg-8">
         <h1 class="pet-title">{{ peticion()!.title }}</h1>
 
@@ -53,7 +52,6 @@
           <p>{{ peticion()!.description }}</p>
         </div>
 
-        <!-- CREADOR -->
         <div class="creator-info">
           <img
             [src]="'https://placehold.co/40x40/585858/fff?text=' + (peticion()!.user?.name?.charAt(0)?.toUpperCase() ?? 'U')"
@@ -65,7 +63,6 @@
           </div>
         </div>
 
-        <!-- COMENTARIOS (estáticos por ahora) -->
         <div class="mt-5">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="comment-header-title">Opiniones de firmantes</h3>
@@ -93,7 +90,6 @@
           </div>
         </div>
 
-        <!-- CONTRIB -->
         <div class="contrib-section-detail text-center">
           <h2 class="fw-bold fs-5">Apoya el cambio<br>Hazte Socio</h2>
 
@@ -118,7 +114,6 @@
         </div>
       </div>
 
-      <!-- SIDEBAR DESKTOP -->
       <div class="col-lg-4 d-none d-lg-block">
         <div class="sidebar-sticky">
           <div class="signature-box">
@@ -149,7 +144,6 @@
   }
 </main>
 
-<!-- BOTÓN FIJO MOBILE -->
 @if (peticion()) {
   <div class="mobile-sign-fixed d-lg-none">
     <div class="d-flex justify-content-between align-items-center">

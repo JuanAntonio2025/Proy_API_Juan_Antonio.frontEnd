@@ -10,7 +10,6 @@
         <div class="card-body">
           <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
 
-            <!-- Título -->
             <div class="mb-3">
               <label for="title" class="form-label fw-bold">Título de la Petición</label>
               <input
@@ -26,7 +25,6 @@
               }
             </div>
 
-            <!-- Categoría -->
             <div class="mb-3">
               <label for="category_id" class="form-label fw-bold">Categoría</label>
               <select
@@ -47,7 +45,6 @@
               }
             </div>
 
-            <!-- Destinatario -->
             <div class="mb-3">
               <label for="addressee" class="form-label fw-bold">Destinatario (Persona o Entidad)</label>
               <input
@@ -65,7 +62,6 @@
               }
             </div>
 
-            <!-- Descripción -->
             <div class="mb-3">
               <label for="description" class="form-label fw-bold">Descripción / El Problema</label>
               <textarea
@@ -81,7 +77,6 @@
               }
             </div>
 
-            <!-- Imagen actual -->
             <div class="mb-3">
               <label class="form-label fw-bold">Imagen actual</label>
               <div class="petition-hero-image-container mb-2">
@@ -89,7 +84,6 @@
               </div>
             </div>
 
-            <!-- Nueva imagen -->
             <div class="mb-3">
               <label for="file" class="form-label fw-bold">Foto para la Petición</label>
               <input
@@ -108,7 +102,6 @@
               }
             </div>
 
-            <!-- Botón -->
             <div class="d-grid">
               <button class="btn btn-yellow fw-bold py-2" type="submit" [disabled]="loading()">
                 @if (loading()) { Guardando... } @else { Guardar cambios }
@@ -117,7 +110,6 @@
 
           </form>
         </div>
-
       </div>
     </div>
   </div>

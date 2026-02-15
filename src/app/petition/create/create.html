@@ -10,7 +10,6 @@
         <div class="card-body">
           <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
 
-            <!-- TÍTULO -->
             <div class="mb-3">
               <label class="form-label fw-bold" for="title">Título de la Petición</label>
 
@@ -30,7 +29,6 @@
               }
             </div>
 
-            <!-- CATEGORÍA -->
             <div class="mb-3">
               <label class="form-label fw-bold" for="category_id">Categoría</label>
 
@@ -55,7 +53,6 @@
               }
             </div>
 
-            <!-- DESTINATARIO -->
             <div class="mb-3">
               <label class="form-label fw-bold" for="addressee">Destinatario (Persona o Entidad)</label>
 
@@ -77,7 +74,6 @@
               }
             </div>
 
-            <!-- DESCRIPCIÓN -->
             <div class="mb-3">
               <label class="form-label fw-bold" for="description">Descripción / El Problema</label>
 
@@ -96,7 +92,6 @@
               }
             </div>
 
-            <!-- FOTO -->
             <div class="mb-3">
               <label class="form-label fw-bold" for="file">Foto para la Petición</label>
 
@@ -115,7 +110,6 @@
               }
             </div>
 
-            <!-- BOTÓN -->
             <div class="d-grid">
               <button
                 type="submit"

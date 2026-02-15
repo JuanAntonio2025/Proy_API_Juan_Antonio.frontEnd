@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PetitionService } from '../../petition';
 import { Petition, Category } from '../../models/petition';
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-edit',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './edit.html',
   styleUrl: './edit.css'
 })
@@ -42,13 +42,11 @@ export class EditComponent implements OnInit {
 
     this.id.set(Number(idParam));
 
-    // 1) Cargar categorías (para el select)
     this.petitionService.fetchCategories().subscribe({
       next: (cats) => this.categories.set(cats),
       error: () => this.categories.set([])
     });
 
-    // 2) Cargar petición
     this.cargarDatos(this.id()!);
   }
 
@@ -71,7 +69,7 @@ export class EditComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0] ?? null;
 
-    console.log('FILE SELECTED:', file); // ✅ debe imprimir un File
+    console.log('FILE SELECTED:', file);
 
     this.fileToUpload = file;
   }

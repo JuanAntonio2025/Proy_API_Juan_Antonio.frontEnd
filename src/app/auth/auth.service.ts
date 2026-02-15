@@ -9,6 +9,7 @@ export class AuthService {
   private api = 'http://localhost:8000/api';
   private userSubject = new BehaviorSubject<User | null>(null);
   private router = inject(Router);
+  showWelcome = signal(false);
 
   // 1. SIGNAL: Estado reactivo para el Navbar.
   // Se inicializa comprobando si ya existe el token.
@@ -53,18 +54,28 @@ export class AuthService {
   }
 
   private storeTokens(res: LoginResponse) {
-    console.log('LO QUE LLEGA DEL SERVIDOR:', res);
     localStorage.setItem('access_token', res.access_token);
 
     // 2. ACTUALIZACIÓN: Avisamos al signal de que ya estamos dentro
     this.isLoggedIn.set(true);
 
     if (res.user) {
+      this.userSubject.next(res.user);
       this.currentUser.set(res.user);
       this.userSubject.next(res.user);
       // Guardamos en localStorage para que al pulsar F5 no se olvide
       localStorage.setItem('user_data', JSON.stringify(res.user));
     }
+
+    this.getProfile().subscribe({
+      next: (user) => {
+        this.userSubject.next(user);
+        this.currentUser.set(user);
+        localStorage.setItem('user_data', JSON.stringify(user));
+        this.showWelcome.set(true);
+      },
+      error: () => this.limpiarSesionLocal()
+    });
   }
 
   private limpiarSesionLocal() {

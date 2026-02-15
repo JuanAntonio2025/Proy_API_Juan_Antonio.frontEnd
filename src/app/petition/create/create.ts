@@ -18,8 +18,8 @@ export class CreateComponent {
   private router = inject(Router);
 
   loading = signal(false);
-
   categories = signal<Category[]>([]);
+
   fileToUpload: File | null = null;
   fileError: string = '';
 
@@ -31,7 +31,6 @@ export class CreateComponent {
   });
 
   ngOnInit(): void {
-    // Necesitas un endpoint tipo GET /categories
     this.petitionService.fetchCategories().subscribe({
       next: (cats) => this.categories.set(cats),
       error: () => this.categories.set([])

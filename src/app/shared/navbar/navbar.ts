@@ -12,7 +12,9 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent {
   private authService = inject(AuthService);
+  public auth = inject(AuthService);
   public router: Router = inject(Router);
+
   // REFERENCIA A SIGNALS:
   // No las ejecutamos con (), pasamos la referencia para que el template las "escuche"
   public currentUser = this.authService.currentUser;
@@ -20,5 +22,9 @@ export class NavbarComponent {
 
   logout() {
     this.authService.logout().subscribe();
+  }
+
+  closeWelcome() {
+    this.auth.showWelcome.set(false);
   }
 }

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Petition } from '../../models/petition';
 import { API_URL } from '../../core/config/api.config';
-import { AuthService } from '../../auth/auth.service';
 import {LucideAngularModule} from 'lucide-angular';
 
 type PetitionVM = Petition & { image: string };

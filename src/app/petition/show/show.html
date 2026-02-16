@@ -43,6 +43,10 @@
             [alt]="peticion()!.title">
         </div>
 
+        <div class="mt-2">
+          <p>Categoría: {{ peticion()!.category?.name ?? 'Sin categoría' }}</p>
+        </div>
+
         <div class="mt-4">
           <p>Destinatario: {{ peticion()!.addressee }}</p>
         </div>

@@ -29,7 +29,7 @@ export class ShowComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
 
-  //Helper para los botones "Editar" y "Borrar"
+  //Para los botones "Editar" y "Borrar"
   private getUserIdFromStorage(): number | null {
     const raw = localStorage.getItem('user_data');
     if (!raw) return null;

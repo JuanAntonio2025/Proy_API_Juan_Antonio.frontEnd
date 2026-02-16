@@ -1,9 +1,9 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PetitionService } from '../../petition';
-import { Petition, Category } from '../../models/petition';
-import { CommonModule } from '@angular/common';
+import {Component, inject, OnInit, signal} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {PetitionService} from '../../petition';
+import {Category, Petition} from '../../models/petition';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-edit',
@@ -67,11 +67,7 @@ export class EditComponent implements OnInit {
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    const file = input.files?.[0] ?? null;
-
-    console.log('FILE SELECTED:', file);
-
-    this.fileToUpload = file;
+    this.fileToUpload = input.files?.[0] ?? null;
   }
 
   onSubmit() {

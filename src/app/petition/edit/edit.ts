@@ -115,18 +115,6 @@ export class EditComponent implements OnInit {
       }
     });
   }
-
-  getImagenUrl(): string {
-    const pet = this.petition();
-    const files = pet?.files ?? [];
-    const last = files.length ? files[files.length - 1] : null;
-    const filePath = last?.file_path;
-
-    if (!filePath) return 'assets/images/placeholder.webp';
-
-    const cleaned = filePath.startsWith('/') ? filePath.slice(1) : filePath;
-    return `${this.API_STORAGE}${cleaned}`;
-  }
 }
 
 

@@ -129,9 +129,6 @@ export class ShowComponent implements OnInit {
           this.errorMessage = err.error?.message ?? 'Error al firmar la petición';
         }
       }
-
     });
   }
-
 }
-

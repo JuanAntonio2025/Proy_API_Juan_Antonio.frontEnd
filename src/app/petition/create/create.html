@@ -104,18 +104,21 @@
               }
             </div>
 
-            <!--CAMBIAR POR UN @if-->
-            <div *ngIf="selectedFiles.length > 0" class="mt-2">
-              <div class="small text-muted">
-                {{ selectedFiles.length }} imagen(es) seleccionada(s):
-              </div>
+            @if (selectedFiles.length > 0) {
+              <div class="mt-2">
 
-              <ul class="small">
-                @for (file of selectedFiles; track file.name) {
-                  <li>{{ file.name }}</li>
-                }
-              </ul>
-            </div>
+                <div class="small text-muted">
+                  {{ selectedFiles.length }} imagen(es) seleccionada(s):
+                </div>
+
+                <ul class="small">
+                  @for (file of selectedFiles; track file.name) {
+                    <li>{{ file.name }}</li>
+                  }
+                </ul>
+
+              </div>
+            }
 
             <div class="d-grid">
               <button

@@ -36,11 +36,61 @@
           }
         </div>
 
-        <div class="petition-hero-image-container mb-4">
-          <img
-            [src]="getImagenUrl()"
-            class="petition-hero-image"
-            [alt]="peticion()!.title">
+        <div class="mb-4" *ngIf="peticion()?.files?.length">
+
+          <div id="petitionCarousel"
+               class="carousel slide"
+               data-bs-ride="carousel">
+
+            <!-- Indicadores -->
+            <div class="carousel-indicators">
+              @for (file of peticion()!.files; track file.id; let i = $index) {
+                <button
+                  type="button"
+                  data-bs-target="#petitionCarousel"
+                  [attr.data-bs-slide-to]="i"
+                  [class.active]="i === 0">
+                </button>
+              }
+            </div>
+
+            <!-- Imágenes -->
+            <div class="carousel-inner rounded">
+
+              @for (file of peticion()!.files; track file.id; let i = $index) {
+                <div class="carousel-item"
+                     [class.active]="i === 0">
+
+                  <div class="carousel-image-wrapper">
+                    <img
+                      [src]="getImagenUrl(file.file_path)"
+                      class="carousel-image"
+                      [alt]="peticion()!.title">
+                  </div>
+
+                </div>
+              }
+
+            </div>
+
+            <!-- Botón anterior -->
+            <button class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#petitionCarousel"
+                    data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <!-- Botón siguiente -->
+            <button class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#petitionCarousel"
+                    data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+
+          </div>
+
         </div>
 
         <div class="mt-4">

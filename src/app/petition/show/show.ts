@@ -66,11 +66,7 @@ export class ShowComponent implements OnInit {
     });
   }
 
-  getImagenUrl(): string {
-    const pet = this.peticion();
-    const files = pet?.files ?? [];
-    const last = files.length ? files[files.length - 1] : null;
-    const filePath = last?.file_path;
+  getImagenUrl(filePath: string): string {
 
     if (!filePath) {
       return 'assets/images/placeholder.webp';
@@ -80,7 +76,7 @@ export class ShowComponent implements OnInit {
       ? filePath.slice(1)
       : filePath;
 
-    return `http://localhost:8000/storage/${cleaned}`;
+    return `${this.API_STORAGE}${cleaned}`;
   }
 
   delete() {

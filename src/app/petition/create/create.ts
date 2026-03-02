@@ -20,7 +20,7 @@ export class CreateComponent {
   loading = signal(false);
   categories = signal<Category[]>([]);
 
-  fileToUpload: File | null = null;
+  selectedFiles: File[] = [];
   fileError: string = '';
 
   itemForm = this.fb.group({
@@ -39,12 +39,18 @@ export class CreateComponent {
 
   onFileSelected(event: any) {
     this.fileError = '';
-    const file = event.target.files[0];
-    if (file) this.fileToUpload = file;
+
+    const files = event.target.files;
+
+    if (files && files.length > 0) {
+      this.selectedFiles = Array.from(files);
+    }
   }
 
   onSubmit() {
-    if (this.itemForm.valid && this.fileToUpload) {
+
+    if (this.itemForm.valid && this.selectedFiles.length > 0) {
+
       this.loading.set(true);
       const formData = new FormData();
 
@@ -52,18 +58,19 @@ export class CreateComponent {
       formData.append('description', this.itemForm.value.description!);
       formData.append('addressee', this.itemForm.value.addressee!);
       formData.append('category_id', this.itemForm.value.category_id!);
-      formData.append('file', this.fileToUpload);
 
-      if (this.fileToUpload) {
-        formData.append('file', this.fileToUpload);
-      }
+      // Añadir múltiples archivos
+      this.selectedFiles.forEach(file => {
+        formData.append('files[]', file);
+      });
 
       this.petitionService.create(formData).subscribe({
         next: () => this.router.navigate(['/mis-peticiones']),
-        error: (err) => this.loading.set(false)
+        error: () => this.loading.set(false)
       });
+
     } else {
-      alert('Rellena todos los campos e imagen');
+      alert('Rellena todos los campos y al menos una imagen');
     }
   }
 }

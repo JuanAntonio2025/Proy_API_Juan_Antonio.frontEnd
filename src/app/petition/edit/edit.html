@@ -78,28 +78,48 @@
             </div>
 
             <div class="mb-3">
-              <label class="form-label fw-bold">Imagen actual</label>
-              <div class="petition-hero-image-container mb-2">
-                <img [src]="getImagenUrl()" class="petition-hero-image" alt="Imagen actual">
+              <label class="form-label fw-bold">Imágenes actuales</label>
+
+              <div class="row">
+                @for (file of petition()?.files ?? []; track file.id) {
+                  <div class="col-4 mb-3 text-center">
+
+                    <img
+                      [src]="API_STORAGE + file.file_path"
+                      class="img-fluid rounded mb-2"
+                      style="height:150px; object-fit:cover;" />
+
+                    <button
+                      type="button"
+                      class="btn btn-sm"
+                      [class.btn-danger]="!deletedFiles.includes(file.id)"
+                      [class.btn-secondary]="deletedFiles.includes(file.id)"
+                      (click)="toggleDeleteFile(file.id)">
+
+                      @if (deletedFiles.includes(file.id)) {
+                        Cancelar
+                      } @else {
+                        Eliminar
+                      }
+                    </button>
+
+                  </div>
+                }
               </div>
             </div>
 
             <div class="mb-3">
               <label for="file" class="form-label fw-bold">Foto para la Petición</label>
               <input
-                id="file"
                 type="file"
                 class="form-control"
-                (change)="onFileSelected($event)"
+                (change)="onFilesSelected($event)"
+                multiple
                 accept="image/*" />
 
               <div class="form-text">
                 Puedes subir una nueva imagen (se añadirá o reemplazará según tu backend).
               </div>
-
-              @if (fileError) {
-                <div class="text-danger small mt-1">{{ fileError }}</div>
-              }
             </div>
 
             <div class="d-grid">

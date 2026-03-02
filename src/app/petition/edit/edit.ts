@@ -26,8 +26,8 @@ export class EditComponent implements OnInit {
   petition = signal<Petition | null>(null);
   categories = signal<Category[]>([]);
 
-  fileToUpload: File | null = null;
-  fileError = '';
+  filesToUpload: File[] = [];
+  deletedFiles: number[] = [];
 
   itemForm = this.fb.group({
     title: ['', [Validators.required]],
@@ -65,9 +65,20 @@ export class EditComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: Event) {
+  onFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    this.fileToUpload = input.files?.[0] ?? null;
+
+    if (input.files) {
+      this.filesToUpload = Array.from(input.files);
+    }
+  }
+
+  toggleDeleteFile(fileId: number) {
+    if (this.deletedFiles.includes(fileId)) {
+      this.deletedFiles = this.deletedFiles.filter(id => id !== fileId);
+    } else {
+      this.deletedFiles.push(fileId);
+    }
   }
 
   onSubmit() {
@@ -77,14 +88,21 @@ export class EditComponent implements OnInit {
     this.loading.set(true);
 
     const formData = new FormData();
-    formData.append('title', this.itemForm.get('title')?.value ?? '');
-    formData.append('description', this.itemForm.get('description')?.value ?? '');
-    formData.append('addressee', this.itemForm.get('addressee')?.value ?? '');
-    formData.append('category_id', this.itemForm.get('category_id')?.value ?? '');
 
-    if (this.fileToUpload) {
-      formData.append('file', this.fileToUpload);
-    }
+    formData.append('title', this.itemForm.value.title ?? '');
+    formData.append('description', this.itemForm.value.description ?? '');
+    formData.append('addressee', this.itemForm.value.addressee ?? '');
+    formData.append('category_id', this.itemForm.value.category_id ?? '');
+
+    // Nuevas imágenes
+    this.filesToUpload.forEach(file => {
+      formData.append('files[]', file);
+    });
+
+    // Imágenes a eliminar
+    this.deletedFiles.forEach(id => {
+      formData.append('deleted_files[]', id.toString());
+    });
 
     this.petitionService.update(this.id()!, formData).subscribe({
       next: () => {
@@ -96,7 +114,6 @@ export class EditComponent implements OnInit {
         this.loading.set(false);
       }
     });
-
   }
 
   getImagenUrl(): string {

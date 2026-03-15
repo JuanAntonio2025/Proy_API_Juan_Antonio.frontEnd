@@ -1,5 +1,5 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, inject, signal } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Petition } from './models/petition';
 import { tap, map } from 'rxjs';
 import { Category } from './models/petition';
@@ -19,9 +19,28 @@ export class PetitionService {
   // Exponemos las peticiones como solo lectura
   allPeticiones = this.#peticiones.asReadonly();
 
-  fetchPeticiones() {
+  fetchPeticiones(filters?: {
+    category_id?: string;
+    signatures?: string;
+    name?: string;
+  }) {
     this.loading.set(true);
-    return this.http.get<{ data: Petition[] }>(this.API_URL).pipe(
+
+    let params = new HttpParams();
+
+    if (filters?.category_id) {
+      params = params.set('category_id', filters.category_id);
+    }
+
+    if (filters?.signatures && filters.signatures !== 'all') {
+      params = params.set('signatures', filters.signatures);
+    }
+
+    if (filters?.name) {
+      params = params.set('name', filters.name);
+    }
+
+    return this.http.get<{ data: Petition[] }>(this.API_URL, { params }).pipe(
       map(res => res.data),
       tap(data => {
         this.#peticiones.set(data);

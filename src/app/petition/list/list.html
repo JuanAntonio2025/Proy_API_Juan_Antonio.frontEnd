@@ -51,6 +51,43 @@
       Encuentra peticiones que te conmuevan y alza tu voz para lograr el cambio.
     </p>
 
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Categoría</label>
+        <select
+          class="form-select"
+          [(ngModel)]="filters.category_id"
+          (change)="onFiltersChange()">
+          <option value="">Todas las categorías</option>
+          @for (category of categories; track category.id) {
+            <option [value]="category.id">{{ category.name }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Firmas</label>
+        <select
+          class="form-select"
+          [(ngModel)]="filters.signatures"
+          (change)="onFiltersChange()">
+          <option value="all">Todas</option>
+          <option value="with">Con firmas</option>
+          <option value="without">Sin firmas</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <p class="mb-0 text-muted">
+        {{ petitions.length }} resultado(s)
+      </p>
+
+      <button class="btn btn-outline-secondary btn-sm" (click)="clearFilters()">
+        Limpiar filtros
+      </button>
+    </div>
+
     @if (cargando) {
       <p class="text-muted">Cargando peticiones...</p>
     }

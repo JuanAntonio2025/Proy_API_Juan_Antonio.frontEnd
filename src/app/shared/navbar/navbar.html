@@ -28,6 +28,18 @@
         </ul>
       }
 
+      <form class="d-flex me-3" (ngSubmit)="searchPetitions()">
+        <input
+          type="search"
+          class="form-control me-2"
+          placeholder="Buscar por título"
+          name="searchTerm"
+          [(ngModel)]="searchTerm">
+        <button type="submit" class="btn btn-outline-danger fw-bold">
+          Buscar
+        </button>
+      </form>
+
       <div class="d-flex align-items-center ms-auto">
 
         <a routerLink="/peticiones"

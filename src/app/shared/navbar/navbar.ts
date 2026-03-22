@@ -33,13 +33,8 @@ export class NavbarComponent {
     this.auth.showWelcome.set(false);
   }
 
-  isInPetitionsList(): boolean {
-    return this.router.url.startsWith('/peticiones');
-  }
-
   searchPetitions() {
     const term = this.searchTerm.trim();
-
     this.searchService.setSearchTerm(term);
 
     this.router.navigate(['/peticiones'], {
@@ -48,19 +43,5 @@ export class NavbarComponent {
       },
       queryParamsHandling: 'merge'
     });
-  }
-
-  onSearchInput() {
-    const term = this.searchTerm.trim();
-    this.searchService.setSearchTerm(term);
-
-    if (this.isInPetitionsList()) {
-      this.router.navigate(['/peticiones'], {
-        queryParams: {
-          name: term || null
-        },
-        queryParamsHandling: 'merge'
-      });
-    }
   }
 }

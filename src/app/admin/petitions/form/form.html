@@ -1,0 +1,83 @@
+<div class="container mt-5">
+  <h1 class="mb-4">
+    {{ isEditMode ? 'Editar Petición' : 'Crear Nueva Petición' }}
+  </h1>
+
+  <form (ngSubmit)="save()" #petitionForm="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Título</label>
+      <input type="text" class="form-control" name="title" [(ngModel)]="form.title" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Descripción</label>
+      <textarea class="form-control" name="description" rows="4" [(ngModel)]="form.description" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Destinatario</label>
+      <input type="text" class="form-control" name="addressee" [(ngModel)]="form.addressee" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Estado</label>
+      <select class="form-select" name="status" [(ngModel)]="form.status" required>
+        <option value="pending">Pending</option>
+        <option value="accepted">Accepted</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Usuario</label>
+      <select class="form-select" name="user_id" [(ngModel)]="form.user_id" required>
+        @for (user of users; track user.id) {
+          <option [value]="user.id">{{ user.name }} ({{ user.email }})</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Categoría</label>
+      <select class="form-select" name="category_id" [(ngModel)]="form.category_id" required>
+        @for (category of categories; track category.id) {
+          <option [value]="category.id">{{ category.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">
+        {{ isEditMode ? 'Añadir nuevas imágenes' : 'Imágenes de la petición' }}
+      </label>
+      <input type="file" class="form-control" multiple (change)="onFilesSelected($event)">
+    </div>
+
+    <button type="submit" class="btn" [class.btn-success]="!isEditMode" [class.btn-primary]="isEditMode">
+      {{ isEditMode ? 'Actualizar Petición' : 'Crear Petición' }}
+    </button>
+
+    <a routerLink="/admin/peticiones/listado" class="btn btn-secondary ms-2">
+      Volver al listado
+    </a>
+  </form>
+
+  @if (isEditMode && petition?.files?.length) {
+    <hr class="my-4">
+
+    <h5>Imágenes actuales</h5>
+    <div class="d-flex flex-wrap gap-3">
+      @for (file of petition!.files!; track file.id) {
+        <div class="position-relative">
+          <img [src]="resolveImage(file.file_path)" width="150" class="img-thumbnail">
+
+          <button
+            type="button"
+            class="btn btn-sm btn-danger position-absolute top-0 end-0"
+            (click)="deleteFile(file.id)">
+            &times;
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

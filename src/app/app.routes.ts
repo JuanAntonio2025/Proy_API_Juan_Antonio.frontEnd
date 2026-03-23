@@ -12,10 +12,13 @@ import { MineComponent } from './petition/mine/mine';
 import { SignedComponent } from './petition/signed/signed';
 import { Layout } from './admin/layout/layout';
 import { Home } from './admin/home/home';
-import { Petitions } from './admin/petitions/petitions';
 import { Users } from './admin/users/users';
-import { Categories} from './admin/categories/categories';
+import { Categories } from './admin/categories/categories';
 import { adminGuard } from './auth/admin/admin-guard';
+import { Index } from './admin/petitions/index';
+import { List } from './admin/petitions/list/list';
+import { Form } from './admin/petitions/form/form';
+import { Details } from './admin/petitions/details/details';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -34,11 +37,17 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: Layout,
-    canActivate: [authGuard, adminGuard],
+    canActivate: [adminGuard],
     children: [
       { path: '', component: Home },
-      { path: 'peticiones', component: Petitions },
-      { path: 'usuarios', component: Users },
+
+      { path: 'peticiones', component: Index },
+      { path: 'peticiones/listado', component: List},
+      { path: 'peticiones/crear', component: Form },
+      { path: 'peticiones/editar/:id', component: Form},
+      { path: 'peticiones/:id', component: Details},
+
+      { path: 'usuarios', component: Users},
       { path: 'categorias', component: Categories }
     ]
   },

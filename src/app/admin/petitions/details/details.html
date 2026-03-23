@@ -1,0 +1,57 @@
+<div class="container mt-5" *ngIf="petition">
+  <h1 class="mb-4">Detalles de la Petición</h1>
+
+  <div class="card mb-4">
+    <div class="card-header bg-dark text-white">
+      Información General
+    </div>
+    <div class="card-body">
+      <p><strong>Título:</strong> {{ petition.title }}</p>
+      <p><strong>Categoría:</strong> {{ petition.category?.name }}</p>
+      <p><strong>Autor:</strong> {{ petition.user?.name }}</p>
+      <p><strong>Dirigido a:</strong> {{ petition.addressee }}</p>
+      <p><strong>Firmas:</strong> {{ petition.signatories }}</p>
+      <p>
+        <strong>Estado:</strong>
+        <span class="badge" [class.bg-success]="petition.status === 'accepted'" [class.bg-warning]="petition.status !== 'accepted'">
+          {{ petition.status }}
+        </span>
+      </p>
+      <p><strong>Fecha de Creación:</strong> {{ petition.created_at | date:'dd/MM/yyyy HH:mm' }}</p>
+
+      <hr>
+
+      <h4>Descripción</h4>
+      <div class="alert alert-light border">
+        {{ petition.description }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header bg-dark text-white">
+      Imágenes Asociadas
+    </div>
+    <div class="card-body">
+      @if (petition.files && petition.files.length > 0) {
+        <div class="row">
+          @for (file of petition.files; track file.id) {
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <img [src]="resolveImage(file.file_path)" class="card-img-top" [alt]="file.name" style="height: 200px; object-fit: cover;">
+                <div class="card-footer">
+                  <small class="text-muted">{{ file.name }}</small>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="text-muted">No hay imágenes asociadas a esta petición.</p>
+      }
+    </div>
+  </div>
+
+  <a [routerLink]="['/admin/peticiones/editar', petition.id]" class="btn btn-primary">Editar</a>
+  <a routerLink="/admin/peticiones/listado" class="btn btn-secondary ms-2">Volver al Listado</a>
+</div>

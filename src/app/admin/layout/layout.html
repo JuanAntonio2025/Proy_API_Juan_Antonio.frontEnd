@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bolder text-danger" routerLink="/admin">
+      Change.org
+    </a>
+
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+          Menú
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" routerLink="/profile">Perfil</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><button class="dropdown-item" (click)="logout()">Cerrar sesión</button></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="sidebar d-flex flex-column pt-0">
+  <ul class="nav nav-pills flex-column mb-auto">
+
+    <li class="nav-item">
+      <a routerLink="/admin"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }"
+         class="nav-link">
+        <i class="bi bi-house me-2"></i> Home
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/peticiones"
+         routerLinkActive="active"
+         class="nav-link">
+        <i class="bi bi-file-text me-2"></i> Peticiones
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/usuarios"
+         routerLinkActive="active"
+         class="nav-link">
+        <i class="bi bi-people-fill me-2"></i> Usuarios
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/categorias"
+         routerLinkActive="active"
+         class="nav-link">
+        <i class="bi bi-tags-fill me-2"></i> Categorías
+      </a>
+    </li>
+
+  </ul>
+</div>
+
+<div class="main-content pt-5">
+  <div class="container-fluid">
+    <router-outlet></router-outlet>
+  </div>
+</div>

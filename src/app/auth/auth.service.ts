@@ -15,7 +15,11 @@ export class AuthService {
   // Se inicializa comprobando si ya existe el token.
   isLoggedIn = signal<boolean>(!!localStorage.getItem('access_token'));
   user$ = this.userSubject.asObservable();
-  currentUser = signal<any>(null);
+  currentUser = signal<User | null>(
+    localStorage.getItem('user_data')
+      ? JSON.parse(localStorage.getItem('user_data')!)
+      : null
+  );
 
   constructor(private http: HttpClient) {}
 

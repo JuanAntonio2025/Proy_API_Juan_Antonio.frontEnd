@@ -58,7 +58,6 @@ export class PetitionService {
   create(formData: FormData) {
     return this.http.post<{ data: Petition }>(this.API_URL, formData).pipe(
       tap(res => {
-        // Añadimos la nueva petición al principio de la lista local
         this.#peticiones.update(list => [res.data, ...list]);
       })
     );

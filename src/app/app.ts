@@ -1,7 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {NavbarComponent} from './shared/navbar/navbar';
-import {Footer} from './shared/footer/footer';
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './shared/navbar/navbar';
+import { Footer } from './shared/footer/footer';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +11,9 @@ import {Footer} from './shared/footer/footer';
 })
 export class App {
   protected readonly title = signal('myfrontend');
+  private router = inject(Router);
+
+  isAdminRoute(): boolean {
+    return this.router.url.startsWith('/admin');
+  }
 }

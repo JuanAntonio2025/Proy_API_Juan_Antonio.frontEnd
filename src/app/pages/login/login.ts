@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
+import { LoginResponse } from '../../auth/auth.model';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,6 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-
 export class LoginComponent {
   email = '';
   password = '';
@@ -21,13 +21,19 @@ export class LoginComponent {
 
   login() {
     this.errorMessage = '';
+
     this.auth.login({ email: this.email, password: this.password })
       .subscribe({
-        next: () => {
-          this.router.navigate(['/']);
+        next: (res: LoginResponse) => {
+          if (res.user?.role === 1) {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/']);
+          }
         },
-        error: (err: { status: number; }) => {
+        error: (err: { status: number }) => {
           console.error('LOGIN ERROR', err);
+
           if (err.status === 401) {
             this.errorMessage = 'El email o la contraseña son incorrectos.';
             this.password = '';

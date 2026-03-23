@@ -10,6 +10,12 @@ import { ShowComponent } from './petition/show/show';
 import { HomeComponent } from './home/home/home';
 import { MineComponent } from './petition/mine/mine';
 import { SignedComponent } from './petition/signed/signed';
+import { Layout } from './admin/layout/layout';
+import { Home } from './admin/home/home';
+import { Petitions } from './admin/petitions/petitions';
+import { Users } from './admin/users/users';
+import { Categories} from './admin/categories/categories';
+import { adminGuard } from './auth/admin/admin-guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +30,19 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+    //Admin
+  {
+    path: 'admin',
+    component: Layout,
+    canActivate: [authGuard, adminGuard],
+    children: [
+      { path: '', component: Home },
+      { path: 'peticiones', component: Petitions },
+      { path: 'usuarios', component: Users },
+      { path: 'categorias', component: Categories }
+    ]
+  },
+
     // Wildcard: Cualquier ruta no encontrada va al home
   { path: '**', redirectTo: '' },
 ];

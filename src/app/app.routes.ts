@@ -15,7 +15,9 @@ import { Home } from './admin/home/home';
 import { UsersIndex } from './admin/users/index';
 import { UsersList } from './admin/users/list/list';
 import { UsersForm } from './admin/users/form/form';
-import { Categories } from './admin/categories/categories';
+import { CategoriesIndex } from './admin/categories/index';
+import { CategoriesForm } from './admin/categories/form/form';
+import { CategoriesList } from './admin/categories/list/list';
 import { adminGuard } from './auth/admin/admin-guard';
 import { PetitionsIndex } from './admin/petitions/index';
 import { PetitionsList } from './admin/petitions/list/list';
@@ -53,7 +55,11 @@ export const routes: Routes = [
       { path: 'usuarios/listado', component: UsersList },
       { path: 'usuarios/crear', component: UsersForm },
       { path: 'usuarios/editar/:id', component: UsersForm },
-      { path: 'categorias', component: Categories }
+
+      { path: 'categorias', component: CategoriesIndex },
+      { path: 'categorias/listado', component: CategoriesList },
+      { path: 'categorias/crear', component: CategoriesForm },
+      { path: 'categorias/editar/:id', component: CategoriesForm },
     ]
   },
 

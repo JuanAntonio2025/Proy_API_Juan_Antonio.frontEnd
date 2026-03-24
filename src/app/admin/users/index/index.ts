@@ -8,6 +8,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './index.html',
   styleUrl: './index.css',
 })
-export class PetitionsIndex {
+export class UsersIndex {
 
 }

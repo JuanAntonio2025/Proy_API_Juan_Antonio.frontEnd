@@ -12,13 +12,15 @@ import { MineComponent } from './petition/mine/mine';
 import { SignedComponent } from './petition/signed/signed';
 import { Layout } from './admin/layout/layout';
 import { Home } from './admin/home/home';
-import { Users } from './admin/users/users';
+import { UsersIndex } from './admin/users/index';
+import { UsersList } from './admin/users/list/list';
+import { UsersForm } from './admin/users/form/form';
 import { Categories } from './admin/categories/categories';
 import { adminGuard } from './auth/admin/admin-guard';
-import { Index } from './admin/petitions/index';
-import { List } from './admin/petitions/list/list';
-import { Form } from './admin/petitions/form/form';
-import { Details } from './admin/petitions/details/details';
+import { PetitionsIndex } from './admin/petitions/index';
+import { PetitionsList } from './admin/petitions/list/list';
+import { PetitionsForm } from './admin/petitions/form/form';
+import { PetitionsDetails } from './admin/petitions/details/details';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -41,13 +43,16 @@ export const routes: Routes = [
     children: [
       { path: '', component: Home },
 
-      { path: 'peticiones', component: Index },
-      { path: 'peticiones/listado', component: List},
-      { path: 'peticiones/crear', component: Form },
-      { path: 'peticiones/editar/:id', component: Form},
-      { path: 'peticiones/:id', component: Details},
+      { path: 'peticiones', component: PetitionsIndex },
+      { path: 'peticiones/listado', component: PetitionsList},
+      { path: 'peticiones/crear', component: PetitionsForm },
+      { path: 'peticiones/editar/:id', component: PetitionsForm},
+      { path: 'peticiones/:id', component: PetitionsDetails},
 
-      { path: 'usuarios', component: Users},
+      { path: 'usuarios', component: UsersIndex },
+      { path: 'usuarios/listado', component: UsersList },
+      { path: 'usuarios/crear', component: UsersForm },
+      { path: 'usuarios/editar/:id', component: UsersForm },
       { path: 'categorias', component: Categories }
     ]
   },

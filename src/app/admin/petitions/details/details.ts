@@ -11,7 +11,7 @@ import { PetitionService } from '../petition-service';
   templateUrl: './details.html',
   styleUrl: './details.css',
 })
-export class Details {
+export class PetitionsDetails {
   private route = inject(ActivatedRoute);
   private adminPetitionService = inject(PetitionService);
 

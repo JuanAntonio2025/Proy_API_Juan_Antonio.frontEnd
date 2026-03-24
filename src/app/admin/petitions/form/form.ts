@@ -13,7 +13,7 @@ import { PetitionService } from '../petition-service';
   templateUrl: './form.html',
   styleUrl: './form.css',
 })
-export class Form {
+export class PetitionsForm {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private adminPetitionService = inject(PetitionService);

@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Petition } from '../../../models/petition';
-import { PetitionService } from '../petition-service';
+import { UserService } from '../user-service';
+import { User } from '../../../auth/auth.model';
 
 @Component({
   selector: 'app-list',
@@ -11,61 +11,61 @@ import { PetitionService } from '../petition-service';
   templateUrl: './list.html',
   styleUrl: './list.css',
 })
-export class PetitionsList {
-  private adminPetitionService = inject(PetitionService);
+export class UsersList {
+  private userService = inject(UserService);
 
-  petitions: Petition[] = [];
+  users: User[] = [];
   loading = true;
 
   currentPage = 1;
   itemsPerPage = 5;
 
   ngOnInit(): void {
-    this.loadPetitions();
+    this.loadUsers();
   }
 
-  loadPetitions(): void {
+  loadUsers(): void {
     this.loading = true;
 
-    this.adminPetitionService.getAll().subscribe({
+    this.userService.getAll().subscribe({
       next: (data) => {
-        this.petitions = data;
+        this.users = data;
         this.currentPage = 1;
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error al cargar peticiones admin:', err);
+        console.error('Error al cargar usuarios:', err);
         this.loading = false;
       }
     });
   }
 
-  deletePetition(id: number): void {
-    const confirmed = confirm('¿Estás seguro de que quieres eliminar esta petición?');
+  deleteUser(id: number): void {
+    const confirmed = confirm('¿Eliminar usuario?');
     if (!confirmed) return;
 
-    this.adminPetitionService.delete(id).subscribe({
+    this.userService.delete(id).subscribe({
       next: () => {
-        this.petitions = this.petitions.filter(p => p.id !== id);
+        this.users = this.users.filter(user => user.id !== id);
 
         if (this.currentPage > this.totalPages) {
           this.currentPage = Math.max(1, this.totalPages);
         }
       },
       error: (err) => {
-        console.error('Error al eliminar petición:', err);
+        console.error('Error al eliminar usuario:', err);
       }
     });
   }
 
   get totalPages(): number {
-    return Math.ceil(this.petitions.length / this.itemsPerPage);
+    return Math.ceil(this.users.length / this.itemsPerPage);
   }
 
-  get paginatedPetitions(): Petition[] {
+  get paginatedUsers(): User[] {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    return this.petitions.slice(start, end);
+    return this.users.slice(start, end);
   }
 
   get pages(): number[] {
@@ -78,14 +78,10 @@ export class PetitionsList {
   }
 
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-    }
+    if (this.currentPage < this.totalPages) this.currentPage++;
   }
 
   prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
+    if (this.currentPage > 1) this.currentPage--;
   }
 }

@@ -8,7 +8,7 @@ import { User } from '../../../auth/auth.model';
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './form.html',
   styleUrl: './form.css',
 })
